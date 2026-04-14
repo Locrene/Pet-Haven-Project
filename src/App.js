@@ -20,6 +20,8 @@ function App() {
             <Landing2
               isLoggedIn={isLoggedIn}
               userName={userName}
+              setIsLoggedIn={setIsLoggedIn}
+              setUserName={setUserName}
             />
           }
         />
@@ -38,13 +40,33 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+          element={
+            isLoggedIn ? (
+              <Dashboard
+                isLoggedIn={isLoggedIn}
+                userName={userName}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
 
         <Route
           path="/adoption"
-          element={isLoggedIn ? <AdoptionFeed /> : <Navigate to="/login" />}
+          element={
+            isLoggedIn ? (
+              <AdoptionFeed
+                isLoggedIn={isLoggedIn}
+                userName={userName}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
+
+
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

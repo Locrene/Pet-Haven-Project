@@ -11,7 +11,7 @@ function Login({ setIsLoggedIn, setUserName }) {
 
   const handleLogin = () => {
     if (!username || !password) {
-      setError("Please enter email and password");
+      setError("Please enter username and password");
       return;
     }
 
@@ -30,7 +30,7 @@ function Login({ setIsLoggedIn, setUserName }) {
           className="back-btn"
           onClick={() => navigate("/")}
         >
-          ← Back to Home
+          Back to Home
         </button>
 
         <div className="login-card">

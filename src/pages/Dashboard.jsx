@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import PetService from "../services/PetService";
 
 import {
@@ -11,20 +12,27 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Dashboard() {
+function Dashboard({ isLoggedIn, userName, setIsLoggedIn, setUserName }) {
+  const navigate = useNavigate();
+
   const [pets, setPets] = useState([]);
   const [available, setAvailable] = useState(0);
   const [missing, setMissing] = useState(0);
   const [adopted, setAdopted] = useState(0);
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
+    }
+
     const data = PetService.getAllPets();
     setPets(data);
 
-    setAvailable(data.filter(p => p.status === "available").length);
-    setMissing(data.filter(p => p.status === "missing").length);
-    setAdopted(data.filter(p => p.status === "adopted").length);
-  }, []);
+    setAvailable(data.filter((p) => p.status === "available").length);
+    setMissing(data.filter((p) => p.status === "missing").length);
+    setAdopted(data.filter((p) => p.status === "adopted").length);
+  }, [isLoggedIn, navigate]);
 
   const chartData = [
     { day: "Mon", value: 20 },
@@ -37,17 +45,15 @@ function Dashboard() {
   ];
 
   return (
-    <div className="dashboard">
-
-      <Sidebar />
+    <div>
+      <Navbar isLoggedIn={isLoggedIn} userName={userName} setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>
 
       <div className="main-content">
-
         <div className="dashboard-header">
           <h2>Dashboard</h2>
           <div className="header-right">
             <input placeholder="Search pets..." />
-            <div className="user-box">👤 Admin</div>
+            
           </div>
         </div>
 
@@ -67,7 +73,6 @@ function Dashboard() {
         </div>
 
         <div className="dashboard-row">
-
           <div className="dashboard-box large">
             <h3>Adoption Overview</h3>
             <div className="chart-box">
@@ -76,7 +81,12 @@ function Dashboard() {
                   <XAxis dataKey="day" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#0b2c4d" strokeWidth={3} />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#0b2c4d"
+                    strokeWidth={3}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -84,18 +94,17 @@ function Dashboard() {
 
           <div className="dashboard-box small">
             <h3>Quick Actions</h3>
-            <button>+ Post Pet</button>
-            <button>⚠ Report Missing</button>
-            <button>🔍 Search Pets</button>
-            <button>💬 Messages</button>
+            <button> Post Pet</button>
+            <button> Report Missing</button>
+            <button> Search Pets</button>
+            <button> Messages</button>
           </div>
-
         </div>
 
         <div className="dashboard-box">
           <h3>Recent Pets</h3>
           <div className="dashboard-pet-grid">
-            {pets.map(pet => (
+            {pets.map((pet) => (
               <div key={pet.id} className="dashboard-pet-card">
                 <img
                   src={pet.image}
@@ -108,12 +117,7 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="dashboard-box">
-          <h3>Notifications</h3>
-          <p>📌 New adoption request</p>
-          <p>📩 You received a message</p>
-        </div>
-
+        
       </div>
     </div>
   );

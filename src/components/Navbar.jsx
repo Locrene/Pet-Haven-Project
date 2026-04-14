@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
-function Navbar({ isLoggedIn, userName, variant }) {
+function Navbar({ isLoggedIn, userName, setIsLoggedIn, setUserName, variant }) {
   const navigate = useNavigate();
 
   const handleProtectedNavigation = (path) => {
@@ -10,6 +10,16 @@ function Navbar({ isLoggedIn, userName, variant }) {
     }
     navigate(path);
   };
+
+  const handleLogout = () => {
+  const confirmLogout = window.confirm("Are you sure you want to logout?");
+
+  if (confirmLogout) {
+    setIsLoggedIn(false);
+    setUserName("");
+    navigate("/");
+  }
+};
 
   return (
     <div className="navbar">
@@ -24,10 +34,11 @@ function Navbar({ isLoggedIn, userName, variant }) {
 
       {variant !== "public" && (
         <ul className="nav-links">
+          <li onClick={() => navigate("/")}>Home</li>
           <li onClick={() => handleProtectedNavigation("/dashboard")}>Dashboard</li>
           <li onClick={() => handleProtectedNavigation("/adoption")}>Adoption</li>
-          <li onClick={() => handleProtectedNavigation("/missing-pets")}>Missing Pets</li>
-          <li onClick={() => handleProtectedNavigation("/how-it-works")}>How It Works</li>
+          <li onClick={() => handleProtectedNavigation("/missing-pets")}>Help and Support</li>
+          
         </ul>
       )}
 
@@ -39,7 +50,7 @@ function Navbar({ isLoggedIn, userName, variant }) {
       ) : (
         <div className="nav-buttons">
           <span className="welcome-text">Welcome, {userName}</span>
-          <button onClick={() => navigate("/")}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       )}
     </div>

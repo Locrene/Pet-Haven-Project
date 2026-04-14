@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import PetCard from "../components/PetCard";
 import PetService from "../services/PetService";
 
-function AdoptionFeed() {
+function AdoptionFeed({ isLoggedIn, userName, setIsLoggedIn, setUserName }) {
   const [pets, setPets] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -12,18 +12,17 @@ function AdoptionFeed() {
     setPets(data);
   }, []);
 
-  // 🔍 FILTER
   const filteredPets = pets.filter((pet) =>
     pet.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="dashboard">
+    <div>
 
-      {/* SIDEBAR */}
-      <Sidebar />
+      {/* ✅ NAVBAR TOP */}
+      <Navbar isLoggedIn={isLoggedIn} userName={userName} setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>
 
-      {/* MAIN */}
+      {/* MAIN CONTENT */}
       <div className="main-content">
 
         {/* HEADER */}
@@ -37,7 +36,6 @@ function AdoptionFeed() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <div className="user-box">👤 Admin</div>
           </div>
         </div>
 

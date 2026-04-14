@@ -2,7 +2,7 @@ import "../styles/app.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-function Landing({ isLoggedIn, userName }) {
+function Landing({ isLoggedIn, userName, setIsLoggedIn, setUserName }) {
   const navigate = useNavigate();
 
   const pets = [
@@ -47,7 +47,9 @@ function Landing({ isLoggedIn, userName }) {
   return (
     <div className="home-page">
 
-      <Navbar isLoggedIn={isLoggedIn} userName={userName}/>
+      <Navbar
+  isLoggedIn={isLoggedIn} userName={userName} setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}
+/>
 
       
 
@@ -59,10 +61,33 @@ function Landing({ isLoggedIn, userName }) {
         <div className="search-bar">
           <input type="text" placeholder="Search Pet Listings..." />
           <button>Search</button>
+
+            <div className="stat-card">
+              <h2>17</h2>
+              <h4>Pets Available</h4>
+              <p>Pets available for Adoption</p>
+            </div>
+
+            <div className="stat-card">
+              <h2>3</h2>
+              <h4>Missing Pets</h4>
+              <p>Missing pets reunited with owners</p>
+            </div>
+
+            <div className="stat-card">
+              <h2>35</h2>
+              <h4>Successfully adopted</h4>
+              <p>Pets successfully Adopted</p>
+            </div>
+
         </div>
+
+        
       </header>
 
-      <section className="stats-section">
+      
+
+      {/* <section className="stats-section">
         <div className="stat-card">
           <h2>17</h2>
           <h4>Pets Available</h4>
@@ -80,7 +105,7 @@ function Landing({ isLoggedIn, userName }) {
           <h4>Successfully adopted</h4>
           <p>Pets successfully Adopted</p>
         </div>
-      </section>
+      </section> */}
 
       <section className="featured-section">
         <h2>Featured Pets | Say Laban Sila!</h2>
