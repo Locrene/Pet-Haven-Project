@@ -84,7 +84,7 @@ body {
  align-items: center;
 }
 .search-bar input {
- flex: 1;
+ width: 30%;
  padding: 15px 18px;
  border: none;
  border-radius: 10px;

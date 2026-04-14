@@ -1,22 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Navbar({ isLoggedIn, variant }) {
+function Navbar({ isLoggedIn, userName, variant }) {
+  const navigate = useNavigate();
+
+  const handleProtectedNavigation = (path) => {
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
+    }
+    navigate(path);
+  };
+
   return (
     <div className="navbar">
-      <h2>PawHaven</h2>
-      
-      
 
-      <ul>
-        {isLoggedIn && variant !== "public" && (
-          <>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><Link to="/adoption">Adoption</Link></li>
-            <li><Link to="/missing">Missing Pets</Link></li>
-            <li><Link to="/map">Map</Link></li>
-          </>
-        )}
-      </ul>
+      <div className="logo-section">
+        <div className="logo-icon">🐾</div>
+        <div>
+          <h2>PawHaven</h2>
+          <p>Cebu City Pet Adoption</p>
+        </div>
+      </div>
+
+      {variant !== "public" && (
+        <ul className="nav-links">
+          <li onClick={() => handleProtectedNavigation("/dashboard")}>Dashboard</li>
+          <li onClick={() => handleProtectedNavigation("/adoption")}>Adoption</li>
+          <li onClick={() => handleProtectedNavigation("/missing-pets")}>Missing Pets</li>
+          <li onClick={() => handleProtectedNavigation("/how-it-works")}>How It Works</li>
+        </ul>
+      )}
 
       {!isLoggedIn ? (
         <div className="nav-buttons">
@@ -24,7 +37,10 @@ function Navbar({ isLoggedIn, variant }) {
           <Link to="/register"><button>Sign Up</button></Link>
         </div>
       ) : (
-        <button>Logout</button>
+        <div className="nav-buttons">
+          <span className="welcome-text">Welcome, {userName}</span>
+          <button onClick={() => navigate("/")}>Logout</button>
+        </div>
       )}
     </div>
   );

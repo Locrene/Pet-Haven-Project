@@ -1,5 +1,6 @@
 import "../styles/app.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Landing({ isLoggedIn, userName }) {
   const navigate = useNavigate();
@@ -45,42 +46,11 @@ function Landing({ isLoggedIn, userName }) {
 
   return (
     <div className="home-page">
-      <nav className="navbar">
-        <div className="logo-section">
-          <div className="logo-icon">🐾</div>
-          <div>
-            <h2>PawHaven</h2>
-            <p>Cebu City Pet Adoption</p>
-          </div>
-        </div>
 
+      <Navbar isLoggedIn={isLoggedIn} userName={userName}/>
 
-        {/*"handleProtectNavigation makes it when the user is not yet logged in but they clicked it, it proceeds to login page*/} 
-        <ul className="nav-links">
-          <li onClick={() => handleProtectedNavigation("/dashboard")}>Dashboard</li>
-          <li onClick={() => handleProtectedNavigation("/adoption")}>Adoption</li>
-          <li onClick={() => handleProtectedNavigation("/missing-pets")}>Missing Pets</li>
-          <li onClick={() => handleProtectedNavigation("/how-it-works")}>How It Works</li>
-        </ul>
+      
 
-
-
-        {/* When user is not logged in, they cannot proceed to another page. but when logged in, welcome message is displayed */}
-        {!isLoggedIn ? (
-          <button
-            className="signup-btn"
-            onClick={() => navigate("/login")}
-          >
-            Sign Up
-          </button>
-        ) : (
-          <div className="welcome-text">
-            Welcome, {userName}
-          </div>
-        )}
-
-
-      </nav>
 
       <header className="hero-section">
         <h1>Find Your New Best Friend in Cebu City!</h1>
