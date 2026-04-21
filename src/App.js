@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
 
+import Navbar from "./components/Navbar";
 import Landing2 from "./pages/Landing2";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <Router>
+      <Navbar isLoggedIn={isLoggedIn} />
       <Routes>
         <Route
           path="/"
