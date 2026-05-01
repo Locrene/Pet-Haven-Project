@@ -18,7 +18,7 @@ function Login({ setIsLoggedIn, setUserName }) {
     setError("");
     setIsLoggedIn(true);
     setUserName(username);
-    navigate("/");
+    navigate("/home");
   };
 
   return (

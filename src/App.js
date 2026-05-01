@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AdoptionFeed from "./pages/AdoptionFeed";
+import HelpSupport from "./pages/HelpSupport";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,6 +21,8 @@ function App() {
             <Landing2
               isLoggedIn={isLoggedIn}
               userName={userName}
+              setIsLoggedIn={setIsLoggedIn}
+              setUserName={setUserName}
             />
           }
         />
@@ -36,16 +39,54 @@ function App() {
 
         <Route path="/register" element={<Register />} />
 
+        {/* DASHBOARD */}
         <Route
           path="/dashboard"
-          element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+          element={
+            isLoggedIn ? (
+              <Dashboard
+                isLoggedIn={isLoggedIn}
+                userName={userName}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
 
+        {/* ADOPTION */}
         <Route
           path="/adoption"
-          element={isLoggedIn ? <AdoptionFeed /> : <Navigate to="/login" />}
+          element={
+            isLoggedIn ? (
+              <AdoptionFeed
+                isLoggedIn={isLoggedIn}
+                userName={userName}
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
 
+        {/* ✅ HELP SUPPORT (ADDED) */}
+       <Route
+  path="/help"
+  element={
+    isLoggedIn ? (
+      <HelpSupport
+        isLoggedIn={isLoggedIn}
+        userName={userName}
+        setIsLoggedIn={setIsLoggedIn}
+        setUserName={setUserName}
+      />
+    ) : (
+      <Navigate to="/login" />
+    )
+  }
+/>
+
+        {/* FALLBACK */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
